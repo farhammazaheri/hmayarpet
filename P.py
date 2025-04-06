@@ -154,16 +154,15 @@ elif selected_view == "🍽 Meal Plan":
     if submitted:
         with st.spinner("🧠 Creating the perfect meal plan..."):
             plan_details = f"{plan_type} meal plan for a {pet_type} named {pet_name}, aged {pet_age} years, weighing {pet_weight} kg."
-           try:
+            try:
                 response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": plan_details}],
-                timeout=60)            
+                    model="gpt-4o-mini",
+                    messages=[{"role": "user", "content": plan_details}],
+                    timeout=60
+                )
                 meal_plan = response.choices[0].message.content
-               
-                except Exception as e:
-                
-                    meal_plan = f"❌ An error occurred while generating the meal plan: {str(e)}"
+            except Exception as e:
+                meal_plan = f"❌ An error occurred while generating the meal plan: {str(e)}"
 
             st.markdown(f"""
                 <div class="response-box">
@@ -172,7 +171,7 @@ elif selected_view == "🍽 Meal Plan":
                 </div>
             """, unsafe_allow_html=True)
 
-# Pet Education View
+# Education View
 elif selected_view == "📚 Education":
     st.markdown("<h2 style='color: var(--text);'>📚 Pet Education Hub</h2>", unsafe_allow_html=True)
     
@@ -182,12 +181,16 @@ elif selected_view == "📚 Education":
         
     if submitted and query:
         with st.spinner("🔍 Searching for the best answers..."):
-            response2 = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": query}]
-                stream=True
-            )
-            education_response = response2.choices[0].message.content
+            try:
+                response2 = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[{"role": "user", "content": query}],
+                    timeout=60
+                )
+                education_response = response2.choices[0].message.content
+            except Exception as e:
+                education_response = f"❌ Failed to retrieve advice: {str(e)}"
+
             st.markdown(f"""
                 <div class="response-box">
                     <h4 style='color: var(--secondary);'>📖 Expert Advice</h4>
@@ -205,11 +208,16 @@ elif selected_view == "🩺 Medical Advice":
         
     if submitted and health_issue:
         with st.spinner("⏳ Analyzing symptoms..."):
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": f"Provide advice for: {health_issue}"}]
-            )
-            medical_response = response.choices[0].message.content
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[{"role": "user", "content": f"Provide advice for: {health_issue}"}],
+                    timeout=60
+                )
+                medical_response = response.choices[0].message.content
+            except Exception as e:
+                medical_response = f"❌ Error: {str(e)}"
+
             st.markdown(f"""
                 <div class="response-box">
                     <h4 style='color: var(--primary);'>📋 Medical Report</h4>
