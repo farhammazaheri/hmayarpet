@@ -154,12 +154,17 @@ elif selected_view == "🍽 Meal Plan":
     if submitted:
         with st.spinner("🧠 Creating the perfect meal plan..."):
             plan_details = f"{plan_type} meal plan for a {pet_type} named {pet_name}, aged {pet_age} years, weighing {pet_weight} kg."
-            response = client.chat.completions.create(
+           try:
+                response = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[{"role": "user", "content": plan_details}]
-                stream=True
-            )
-            meal_plan = response.choices[0].message.content
+                messages=[{"role": "user", "content": plan_details}],
+                timeout=60)            
+                meal_plan = response.choices[0].message.content
+               
+            except Exception as e:
+                
+                meal_plan = f"❌ An error occurred while generating the meal plan: {str(e)}"
+
             st.markdown(f"""
                 <div class="response-box">
                     <h4 style='color: var(--primary);'>🍗 Meal Plan for {pet_name}</h4>
