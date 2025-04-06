@@ -156,8 +156,7 @@ elif selected_view == "🍽 Meal Plan":
             plan_details = f"{plan_type} meal plan for a {pet_type} named {pet_name}, aged {pet_age} years, weighing {pet_weight} kg."
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[{"role": "user", "content": 
-                           plan_details}]
+                messages=[{"role": "user", "content": plan_details}]
                 stream=True
             )
             meal_plan = response.choices[0].message.content
@@ -178,11 +177,12 @@ elif selected_view == "📚 Education":
         
     if submitted and query:
         with st.spinner("🔍 Searching for the best answers..."):
-            response = client.chat.completions.create(
+            response2 = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[{"role": "user", "content": query}]
+                stream=True
             )
-            education_response = response.choices[0].message.content
+            education_response = response2.choices[0].message.content
             st.markdown(f"""
                 <div class="response-box">
                     <h4 style='color: var(--secondary);'>📖 Expert Advice</h4>
