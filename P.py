@@ -161,9 +161,9 @@ elif selected_view == "🍽 Meal Plan":
                 timeout=60)            
                 meal_plan = response.choices[0].message.content
                
-            except Exception as e:
+                except Exception as e:
                 
-                meal_plan = f"❌ An error occurred while generating the meal plan: {str(e)}"
+                    meal_plan = f"❌ An error occurred while generating the meal plan: {str(e)}"
 
             st.markdown(f"""
                 <div class="response-box">
