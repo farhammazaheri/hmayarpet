@@ -157,6 +157,7 @@ elif selected_view == "🍽 Meal Plan":
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[{"role": "user", "content": plan_details}]
+                stream=True
             )
             meal_plan = response.choices[0].message.content
             st.markdown(f"""
