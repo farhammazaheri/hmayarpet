@@ -156,7 +156,8 @@ elif selected_view == "🍽 Meal Plan":
             plan_details = f"{plan_type} meal plan for a {pet_type} named {pet_name}, aged {pet_age} years, weighing {pet_weight} kg."
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[{"role": "user", "content": plan_details}]
+                messages=[{"role": "user", "content": 
+                           plan_details}]
                 stream=True
             )
             meal_plan = response.choices[0].message.content
